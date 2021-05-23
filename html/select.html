@@ -4,13 +4,12 @@
     <meta charset="utf-8">
     <title>Frame it!</title>
     <link rel="stylesheet" href="../styles/navbar.css">
-    <link rel="stylesheet" href="../styles/faves.css">
 
     <style>
     </style>
     
   </head>
-  <body onload="draw();">
+  <body >
   <div class="header">
   <h1>Frame it!</h1>
   </div>
@@ -57,6 +56,18 @@
    </div>
    
       <div id="forCanvas">
+      <canvas id="canvas"></canvas>
+      </div>
+      
+	<!-- for express-upload testing -->
+	 <form ref='uploadForm' 
+      id='uploadForm' 
+      action='../' 
+      method='post' 
+      encType="multipart/form-data">
+        <input type="file" name="sampleFile" />
+        <input type='submit' value='Upload!' />
+    </form> 
    
    <!-- 
     <form name="form2" id="form2">
@@ -72,6 +83,6 @@
     
   </body>
 
-  <script src="../scripts/drawSelect.js"></script>
+  <script src="../scripts/drawSelect.js" crossorigin="anonymous"></script>
 	
 </html> 
