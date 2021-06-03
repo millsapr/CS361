@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Frame it!</title>
+    <link rel="stylesheet" href="../styles/navbar.css">
+
+    <style>
+     #canvas {
+           display: none;
+        }
+    </style>
+    
+  </head>
+  <body >
+  <div class="header">
+  <h1>Frame it!</h1>
+  </div>
+  
+	<div class="navbar">
+	  <a href="../index.html">Home</a>
+	  <a href="upload.html">Upload</a>
+	  <a href="select.html">Select</a>
+	  <a href="search.html">Search</a>
+	  <a href="#" class="active">Screenshots</a>
+	</div>
+	</br>
+	
+  <div class="main">
+	<span>Enter the URL for an iOS screenshot you want to wrap in a device frame.</span>
+	</br>
+	<span>Select the device to use for framing. </span>
+	</br>
+	<span>When you click 'Submit' you'll be able to see a preview of the image and then download it!</span>
+	</br>	
+	</br>
+	<div>
+	<label>Enter the screenshot URL:
+            <input type="text" name="imageURL" id="imageURL" >
+        </label>
+        <br><br>
+        
+	<label for="stockPhoto">Select a device model:</label>
+		<select name="stockPhoto" id="stockPhoto">
+		<option value="../images/iPhoneSE.png">iPhone SE</option>
+		<option value="../images/iPhone12Pro.png">iPhone 12 Pro</option>
+		<option value="../images/iPad.png">iPad</option>
+    </select>
+        <br><br>
+          
+        <input type="submit" id="Submit">
+        </br>
+        </br>
+    </div>
+    </form>
+   
+   
+      <div id="forCanvas">
+      <canvas id="canvas"></canvas>
+      </div>
+      
+	<div id="buttonDiv">
+    <a href="/framed/image.png" download="framedImage.png"><button type=button>Download Framed Image</button></a>
+    </div>
+    </br>
+   </div>
+   <!-- 
+    <form name="form2" id="form2">
+   	
+        <input type="submit" id="download" value="Download">
+        </br>
+        </br>
+             
+    </form>
+	-->
+   
+  
+    
+  </body>
+
+  <script src="../scripts/drawPhone.js" crossorigin="anonymous"></script>
+	
+</html> 

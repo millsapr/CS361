@@ -8,7 +8,6 @@ const path = require('path');
 const express = require('express');
 const fileUpload = require('express-fileupload');
 const app = express();
-const { createCanvas, loadImage } = require('canvas')
 
 var http = require('http');
 var fs = require('fs');
@@ -17,14 +16,7 @@ const request = require('request')
 var cors = require('cors');
 app.use(cors());
 
-/*
-var PORT = 13700;
-  
-app.listen(PORT, function(err){
-    if (err) console.log("Error in server setup")
-    console.log("Server listening on Port", PORT);
-})
-*/
+
 
 /* helpers from https://stackoverflow.com/questions/32260117/handlebars-date-format-issue/32260841
 npm install --save handlebars-helpers */
@@ -44,6 +36,8 @@ app.use('/static', express.static('public'));
 /* app.use(express.static(path.join(__dirname, '/public'))); */
 app.set('view engine', 'handlebars');
 app.set('port', process.argv[2]);
+//app.set('mysql', mysql);
+//app.use('/tickets', require('./tickets.js'));
 app.use('/', express.static('public'));
 
 //app.use(multer({dest:'./framed/'}));
@@ -54,32 +48,32 @@ app.use('/', express.static('public'));
 // default options
 app.use(fileUpload());
 
+/*
+app.post('/upload', function(req, res) {
+  let sampleFile;
+  let uploadPath;
+  let formData;
+
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(400).send('No files were uploaded.');
+  }
+
+  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+  sampleFile = req.files.formData;
+  uploadPath = __dirname + '/public/upload/' + formData.name;
+
+  // Use the mv() method to place the file somewhere on your server
+  sampleFile.mv(uploadPath, function(err) {
+    if (err)
+      return res.status(500).send(err);
+
+    res.send('File uploaded!');
+  });
+});
+*/
 
 //http.createServer(function (request, response) {
-app.post('/upload', function (request, response) {
-    const width = 1200;
-	const height = 630;
-
-	const canvas = createCanvas(width, height);
-	const ctx = canvas.getContext('2d');
-
-	ctx.fillStyle = 'orange';
-	ctx.fillRect(0, 0, inputWidth+2*borderThickness, inputHeight+2*borderThickness);
-
-	loadImage(inputImage).then(image => {
-	  context.drawImage(image, 340, 515, 70, 70)
-	  const buffer = canvas.toBuffer('image/png')
-	  var saveURL = __dirname + "/public/framed/image.png";
-	  fs.writeFileSync(saveURL, buffer)
-	});
-	
-	var imageURL = "http://flip2.engr.oregonstate.edu:13700/framed/" + "image.png";
-	response.send(imageURL);
-	
-});
-    
-/*
-    cropImg(request.body);
+app.post('/', function (request, response) {
     //var post='';
     //if (request.method == 'POST') {
         var body = '';
@@ -115,95 +109,31 @@ app.post('/upload', function (request, response) {
         });
     }
 
-// https://pqina.nl/blog/cropping-images-to-an-aspect-ratio-with-javascript/
-function cropImg(sourceImage){
-	//document.getElementById('Submit').addEventListener('click', function(event){
-	return new Promise(resolve => {
-	//const aspectRatio = 1  ;
-		// this image will hold our source image data
-		const inputImage = new Image();
-		inputImage.crossOrigin = "Anonymous";	 // this avoids chrome CORB error
-
-		// we want to wait for our image to load
-		inputImage.onload = () => {
-
-			// let's store the width and height of our image
-			const inputWidth = inputImage.naturalWidth;
-			const inputHeight = inputImage.naturalHeight;
-
-			// get the aspect ratio of the input image
-			//const inputImageAspectRatio = inputWidth / inputHeight;
-
-			// if it's bigger than our target aspect ratio
-			let outputWidth = inputWidth;
-			let outputHeight = inputHeight;
-			
-			// calculate the position to draw the image at
-			const outputX = (outputWidth - inputWidth) * .5;
-			const outputY = (outputHeight - inputHeight) * .5;
-
-			// create a canvas that will present the output image
-			//const outputImage = document.createElement('canvas');
-			const outputImage = document.getElementById('canvas');
-
-			var borderPosX = 0
-  			var borderPosY = 0
-  			var borderThickness = document.getElementById('borderThickness').value;
-			
-			// set it to the same size as the image
-			outputImage.width = outputWidth+2*borderThickness;
-			outputImage.height = outputHeight+2*borderThickness;	
-			//outputImage.setAttribute('width', 132);
-      		//outputImage.setAttribute('height', 150);
-			document.getElementById('forCanvas').appendChild(outputImage);
-
-			const ctx = outputImage.getContext('2d');
-			
-			
-			// draw orange box
-  			ctx.fillStyle = document.getElementById('color').value;
-  			ctx.fillRect(borderPosX, borderPosY, inputWidth+2*borderThickness, inputHeight+2*borderThickness);
-  			ctx.fillRect( 10, 10, 150, 100 );
-			
-			// draw our image at position 0, 0 on the canvas
-			ctx.drawImage(inputImage,  (borderPosX+borderThickness), (borderPosY+borderThickness));
-			resolve(outputImage);
-			console.log("made it to drawimage")
-			
-			//window.location = canvas.toDataURL("image/png");
-			
-			var dataURL = canvas.toDataURL("image/png");
-			console.log("made it to dataurl")
-			
-			
-		    //submitToServer();
-		    sendMessage(dataURL);
-		     
-		};
-
-		// start loading our image
-		inputImage.src = sourceImage; //"https://i.imgur.com/fRdrkI1.jpg"; //document.getElementById('stockPhoto').value;
-   		event.preventDefault(); 
-   		      
-
-	});
-	
-//});
-
-}
-
-//Sending image data to server
-function sendMessage(dataURL){
-   var msg = JSON.stringify(dataURL);
-   //console.log(msg);
-   var xhr = new XMLHttpRequest();
-   xhr.open('POST', '../'); // '../framed' and '/framed' don't return error
-   xhr.send(msg);
-   //alert('file is saved');
-}
-
 });
-*/
+
+app.post('/addBorder', function (req, res) {
+	var inputURL = req.body.imageUrl;
+	//console.log(inputURL);
+	const url = new URL(inputURL);
+	var filename = url.pathname.substr(url.pathname.lastIndexOf("/")+1);
+	var editedImageURL = "http://flip2.engr.oregonstate.edu:13700/borderAdded/" + filename;
+	res.send(editedImageURL); //, filename, imageURL);
+console.log(editedImageURL);
+});
+
+app.post('/addaBorder', function (req, res) {
+	var inputURL = req.body.imageUrl;
+	//console.log(inputURL);
+	const url = new URL(inputURL);
+	var filename = url.pathname.substr(url.pathname.lastIndexOf("/")+1);
+	var editedImageURL = "http://flip2.engr.oregonstate.edu:13700/borderAdded/" + filename;
+	if (url.hostname != "github.com") {
+		res.send("No image found. Please try a different URL.");
+	} else {
+		res.send(editedImageURL); //, filename, imageURL);
+		}
+console.log(editedImageURL);
+});
 
 
 app.use(function(req,res){

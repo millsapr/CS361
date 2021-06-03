@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Frame it!</title>
+    <link rel="stylesheet" href="../styles/navbar.css">
+
+    <style>
+     #canvas {
+           display: none;
+        }
+    </style>
+    
+  </head>
+  <body >
+  <div class="header">
+  <h1>Frame it!</h1>
+  </div>
+  
+	<div class="navbar">
+	  <a href="../index.html">Home</a>
+	  <a href="upload.html">Upload</a>
+	  <a href="#" class="active">Select</a>
+	  <a href="search.html">Search</a>
+	  <a href="phone.html">Screenshots</a>
+	</div>
+	</br>
+	
+  <div class="main">
+	<span>Use the dropdown menu to select the image you want to frame.</span>
+	</br>
+	<span>Then select a border color and thickness. </span>
+	</br>
+	<span>When you click 'Submit' you'll be able to see a preview of the image and then download it!</span>
+	</br>	
+	</br>
+	<div>
+	  <label for="stockPhoto">Select a stock photo:</label>
+  <select name="stockPhoto" id="stockPhoto">
+    <option value="../images/ringtailLemurs.jpg">Ringtail Lemurs</option>
+    <option value="../images/lemurBros.jpg">Lemur Brothers</option>
+    <option value="../images/sailboat.jpg">Sailboat</option>
+    </select>
+        <br><br>
+          <label for="color">Choose a color:</label>
+  <select name="color" id="color">
+    <option value="black">black</option>
+    <option value="pink">pink</option>
+    <option value="blue">blue</option>
+    <option value="orange">orange</option>
+        <option value="green">green</option>
+  </select>
+  <br><br>
+  <label for="borderThickness">Choose a border thickness (in pixels):</label>
+  <select name="borderThickness" id="borderThickness">
+    <option value="3">3</option>
+    <option value="6">6</option>
+    <option value="9">9</option>
+    <option value="12">12</option>
+  </select>
+  <br><br>
+        <input type="submit" id="Submit">
+        </br>
+        </br>
+    </div>
+    </form>
+   
+   
+      <div id="forCanvas">
+      <canvas id="canvas"></canvas>
+      </div>
+      
+	<div id="buttonDiv">
+    <a href="/framed/image.png" download="framedImage.png"><button type=button>Download Framed Image</button></a>
+    </div>
+    </br>
+   </div>
+   <!-- 
+    <form name="form2" id="form2">
+   	
+        <input type="submit" id="download" value="Download">
+        </br>
+        </br>
+             
+    </form>
+	-->
+   
+  
+    
+  </body>
+
+  <script src="../scripts/drawSelect.js" crossorigin="anonymous"></script>
+	
+</html> 
